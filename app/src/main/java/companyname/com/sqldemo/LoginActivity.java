@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private String pass;
     private Button sign_in_register;
     private RequestQueue requestQueue;
-    private static final String URL = " http://devkpl.com/login.php";
+    private static final String url = " http://devkpl.com/login.php";
     AlertDialog.Builder builder;
     private StringRequest request;
 
@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
         sign_in_register = (Button) findViewById(R.id.sign_in_register);
         builder=new AlertDialog.Builder(LoginActivity.this);
-        requestQueue = Volley.newRequestQueue(this);
+        //requestQueue = Volley.newRequestQueue(this);
 
         sign_in_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    StringRequest stringRequest=new StringRequest(Request.Method.POST, URL,
+                    StringRequest stringRequest=new StringRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
@@ -74,13 +74,15 @@ public class LoginActivity extends AppCompatActivity {
                                     try {
                                         JSONArray jsonArray=new JSONArray(response);
                                         JSONObject jsonObject=jsonArray.getJSONObject(0);
+                                       /*
                                         String code=jsonObject.getString("code");
                                         if(code.equals("login_failed"))
                                         {
                                             builder.setTitle("Login Error");
                                             displayAlert(jsonObject.getString("message"));
                                         }
-                                        else
+                                        */
+                                        //else
                                         {
                                             Intent i=new Intent(LoginActivity.this,MainActivity.class);
                                            Bundle bundle=new Bundle();
@@ -112,7 +114,8 @@ public class LoginActivity extends AppCompatActivity {
                             return params;
                         }
                     };
-                    MySingleton.getInstance(LoginActivity.this).addToRequestque(stringRequest);
+                   // MySingleton.getInstance(LoginActivity.this).addToRequestque(stringRequest);
+                    Volley.newRequestQueue(LoginActivity.this).add(stringRequest);
                 }
 
             }
